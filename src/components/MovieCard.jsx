@@ -1,24 +1,31 @@
-import { Card } from "antd";
-const { Meta } = Card;
+import { Card } from 'antd'
+import PropTypes from 'prop-types'
 
-export default function MovieCard() {
+const { Meta } = Card
+
+function MovieCard({ title, year, imageUrl }) {
   return (
     <div>
       <Card
         hoverable
-        style={{
-          width: 240,
-        }}
         cover={
           <img
-            height="200px"
-            alt="example"
-            src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
+            height='260px'
+            alt='example'
+            src={imageUrl ? imageUrl : 'default_movie.jpg'}
           />
         }
       >
-        <Meta title="Europe Street beat" description="www.instagram.com" />
+        <Meta title={title} description={`Released in: ${year}`} />
       </Card>
     </div>
-  );
+  )
 }
+
+MovieCard.propTypes = {
+  title: PropTypes.string.isRequired,
+  year: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
+}
+
+export default MovieCard
