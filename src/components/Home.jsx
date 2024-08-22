@@ -1,19 +1,19 @@
-import { Flex } from 'antd'
-import { useEffect, useState } from 'react'
-import { movieApiClient } from '../api/api.config'
-import API_ENDPOINT from '../api/api.endpoint'
-import MovieCatalog from './MovieCatalog'
+import { Flex } from "antd";
+import { useEffect, useState } from "react";
+import { movieApiClient } from "../api/api.config";
+import API_ENDPOINT from "../api/api.endpoint";
+import MovieCatalog from "./MovieCatalog";
 
 export default function Home() {
-  const [popularMovieList, setPopularMovieList] = useState([])
-  const [topRatedList, setTopRatedList] = useState([])
-  const [upcomingList, setUpcomingList] = useState([])
+  const [popularMovieList, setPopularMovieList] = useState([]);
+  const [topRatedList, setTopRatedList] = useState([]);
+  const [upcomingList, setUpcomingList] = useState([]);
 
   const fetchPopularMovieList = (pageNo = 1) => {
     movieApiClient
       .get(`${API_ENDPOINT.FETCH_POPULAR_MOVIES}?page=${pageNo}`)
       .then((response) => {
-        const results = response.data.results
+        const results = response.data.results;
         const list = results
           .filter((movie) => !!movie)
           .map((movie) => ({
@@ -21,20 +21,20 @@ export default function Home() {
             title: movie.original_title,
             imageUrl: `https://image.tmdb.org/t/p/w185/${movie.poster_path}`,
             year: movie.release_date.slice(0, 4),
-          }))
+          }));
 
-        setPopularMovieList(list)
+        setPopularMovieList(list);
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   const fetchTopRatedMovieList = (pageNo = 1) => {
     movieApiClient
       .get(`${API_ENDPOINT.FETCH_TOP_RATED_MOVIES}?page=${pageNo}`)
       .then((response) => {
-        const results = response.data.results
+        const results = response.data.results;
         const list = results
           .filter((movie) => !!movie)
           .map((movie) => ({
@@ -42,20 +42,20 @@ export default function Home() {
             title: movie.original_title,
             imageUrl: `https://image.tmdb.org/t/p/w185/${movie.poster_path}`,
             year: movie.release_date.slice(0, 4),
-          }))
+          }));
 
-        setTopRatedList(list)
+        setTopRatedList(list);
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   const fetchUpcomingMovieList = (pageNo = 1) => {
     movieApiClient
       .get(`${API_ENDPOINT.FETCH_UPCOMING_MOVIES}?page=${pageNo}`)
       .then((response) => {
-        const results = response.data.results
+        const results = response.data.results;
         const list = results
           .filter((movie) => !!movie)
           .map((movie) => ({
@@ -63,27 +63,29 @@ export default function Home() {
             title: movie.original_title,
             imageUrl: `https://image.tmdb.org/t/p/w185/${movie.poster_path}`,
             year: movie.release_date.slice(0, 4),
-          }))
+          }));
 
-        setUpcomingList(list)
+        setUpcomingList(list);
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
-    fetchPopularMovieList()
-    fetchTopRatedMovieList()
-    fetchUpcomingMovieList()
-  }, [])
+    fetchPopularMovieList();
+    fetchTopRatedMovieList();
+    fetchUpcomingMovieList();
+  }, []);
 
   return (
     <Flex vertical>
-
-      <MovieCatalog  title="Popular Movies" movieList={popularMovieList}/>
-      <MovieCatalog  title="Top Rated Movies" movieList={topRatedList}/>
-      <MovieCatalog  title="Upcoming Movies" movieList={upcomingList}/>
+      <MovieCatalog
+        title=<h2>Popular Movies</h2>
+        movieList={popularMovieList}
+      />
+      <MovieCatalog title=<h2>Top Rated Movies</h2> movieList={topRatedList} />
+      <MovieCatalog title=<h2>Upcoming Movies</h2> movieList={upcomingList} />
 
       {/* <InfiniteScroll
       data={data}
@@ -98,5 +100,5 @@ export default function Home() {
       </ul>
       </InfiniteScroll> */}
     </Flex>
-  )
+  );
 }
